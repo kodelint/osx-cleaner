@@ -11,9 +11,18 @@
 [![Last commit](https://img.shields.io/github/last-commit/kodelint/osx-cleaner.svg)](https://github.com/kodelint/osx-cleaner/commits/main)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/kodelint/osx-cleaner/pulls)
 
-A blazing-fast, terminal-based macOS cleanup and uninstaller utility written in Rust. Clean out caches, logs, trash, and deeply remove applications—all from your terminal.
+A blazing-fast, terminal-based macOS cleanup and uninstaller utility written in Rust.
+`osx` CLI is designed for developers and power users who want complete control over system hygiene 
+without the bloat of GUI tools. Whether you're cleaning caches to free up space or performing a 
+surgical uninstallation of applications, this tool gives you precision, performance, and full visibility into what’s happening under the hood.
+Built natively for macOS and optimized with parallelism and tabled summaries, it helps you:
 
-> Think of it like a professional-grade `brew doctor` + `AppCleaner` for your CLI.
+- Clear system and app junk (logs, caches, temp files, trash)
+- Perform dry-runs to preview what will be cleaned or removed
+- Fully uninstall GUI or CLI apps by deleting related config, cache, and support files
+- Skip SIP-protected or system-critical paths safely
+
+Unlike traditional tools that hide actions behind buttons, **this CLI shows you everything** every path, every byte, every skipped file, so you stay in control.
 
 ---
 
