@@ -24,6 +24,10 @@ Built natively for macOS and optimized with parallelism and tabled summaries, it
 
 Unlike traditional tools that hide actions behind buttons, **this CLI shows you everything** every path, every byte, every skipped file, so you stay in control.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kodelint/blog-images/main/common/01-osx-cleaner.png" alt="osx-cleaner" width="600"/>
+</p>
+
 ---
 
 ## ✨ Features
