@@ -1,0 +1,17 @@
+# The `package` section defines metadata about your Rust project.
+[package]
+name = "osx" # The name of your package (crate). This is how it will be referred to in `Cargo.toml` of other projects.
+version = "0.1.0" # The current version of your package, following Semantic Versioning (SemVer).
+edition = "2024" # The Rust edition to use for compiling this package. "2024" implies features and changes introduced in that edition.
+
+# The `dependencies` section lists all the external crates (libraries) that your project relies on.
+# Cargo automatically fetches, compiles, and links these dependencies.
+[dependencies]
+clap = { version = "4.5.41", features = ["derive"] } # `clap` is a powerful command-line argument parser.
+# `version = "4.5.41"` specifies the exact version to use.
+# `features = ["derive"]` enables procedural macros for deriving `Parser` and `Subcommand` traits,
+# making it easier to define CLI structures using Rust structs and enums.
+colored = "3.0.0" # `colored` is a crate that provides methods to colorize terminal output strings using ANSI escape codes.
+glob = "0.3.2" # `glob` is a crate for matching file paths against patterns (like `*.txt` or `/Volumes/*/.Trashes`).
+rayon = "1.10.0" # `rayon` is a data-parallelism library for Rust. It makes it easy to convert sequential iterators into parallel ones, leveraging multiple CPU cores.
+tabled = "0.20.0" # `tabled` is a crate for printing tables to the terminal. It's used to display structured data like cleanup summaries.
