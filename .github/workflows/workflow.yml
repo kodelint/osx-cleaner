@@ -32,6 +32,7 @@ jobs:
         with:
           # Name the artifact specifically for macOS to avoid confusion
           name: osx-macos-${{ matrix.arch }}
+          # Path to the *binary file itself*. Assuming the crate name is 'osx', the binary is target/release/osx
           path: target/release/osx
 
   release:
@@ -46,7 +47,9 @@ jobs:
         with:
           # Ensure the name matches the artifact name from the 'build' job
           name: osx-macos-x86_64
-          path: ./artifact/macos-x86_64/osx
+          # Specify a new, simpler directory where the artifact will be downloaded.
+          # If the artifact contains a file 'osx', it will be downloaded to 'downloaded_binary_macos/osx'.
+          path: downloaded_binary_macos
 
       - name: Create GitHub Release
         id: create_release
@@ -57,14 +60,17 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }} # Using your custom token name
 
       - name: Upload macOS binary to release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifact/macos-x86_64/osx
-          asset_name: osx-macos-x86_64
+          # This path must point directly to the binary file.
+          # Since the artifact was 'osx' (the file) and it was downloaded into 'downloaded_binary_macos',
+          # the actual file path will be 'downloaded_binary_macos/osx'.
+          asset_path: downloaded_binary_macos/osx
+          asset_name: osx-macos-x86_64 # This is the name displayed in the release assets
           asset_content_type: application/octet-stream
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }} # Using your custom token name
