@@ -11,7 +11,7 @@ use clap::{Parser, Subcommand}; // Import `Parser` and `Subcommand` traits/macro
     name = "osx", // Sets the name of the executable, which appears in help messages (e.g., `osx --help`).
     about = "🚀 macOS application and system cleaner", // Provides a short description of the application.
     version, // Automatically generates the version string from the Cargo.toml file.
-    author = "Your Name <your@email.com>", // Specifies the author information.
+    author = "kodelint <kodelint@gmail.com>", // Specifies the author information.
     disable_help_subcommand = true // Disables the default `help` subcommand, as `clap` provides `--help` automatically.
 )]
 pub struct Cli {
@@ -64,6 +64,9 @@ pub enum Commands {
         /// - `short = 'i'`: Specifies the short form (e.g., `-i path1`).
         /// - `value_delimiter = ','`: Allows multiple values to be provided separated by commas
         ///                            (e.g., `--ignore /path/to/ignore1,/path/to/ignore2`).
+        #[arg(long, short, value_delimiter = ',')]
         ignore: Vec<String>, // A vector of strings, where each string is a path to be ignored.
     },
+    /// Shows the version of the tool and compare if newer version is available
+    Version,
 }

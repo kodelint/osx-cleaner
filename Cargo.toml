@@ -15,3 +15,15 @@ colored = "3.0.0" # `colored` is a crate that provides methods to colorize termi
 glob = "0.3.2" # `glob` is a crate for matching file paths against patterns (like `*.txt` or `/Volumes/*/.Trashes`).
 rayon = "1.10.0" # `rayon` is a data-parallelism library for Rust. It makes it easy to convert sequential iterators into parallel ones, leveraging multiple CPU cores.
 tabled = "0.20.0" # `tabled` is a crate for printing tables to the terminal. It's used to display structured data like cleanup summaries.
+# 'ureq' is a simple and easy-to-use HTTP client.
+# It's what we'll use to make requests to web services (like GitHub's API).
+# The 'json' feature adds convenience for handling JSON responses automatically.
+# 'version' specifies the exact version of the ureq crate.
+# 'features = ["json"]' adds convenience methods for sending and receiving JSON data in HTTP requests.
+ureq = { version = "2.12.1", features = ["json"] }
+# 'serde' is like the universal translator for Rust data structures.
+# It helps us convert our Rust data into various formats (like JSON or YAML) and vice-versa.
+# The 'derive' feature gives us handy macros to automatically implement serialization/deserialization.
+# 'version' specifies the exact version of the serde core library.
+# 'features = ["derive"]' provides macros like `#[derive(Serialize, Deserialize)]`.
+serde = { version = "1.0.219", features = ["derive"] }
