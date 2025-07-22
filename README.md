@@ -5,7 +5,7 @@
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/kodelint/osx-cleaner/actions/workflows/release.yml/badge.svg)](https://github.com/kodelint/osx-cleaner/actions/workflows/release.yml)
+[![CI](https://github.com/kodelint/osx-cleaner/actions/workflows/workflow.yml/badge.svg)](https://github.com/kodelint/osx-cleaner/actions/workflows/workflow.yml)
 [![GitHub release](https://img.shields.io/github/release/kodelint/osx-cleaner.svg)](https://github.com/kodelint/osx-cleaner/releases)
 [![GitHub stars](https://img.shields.io/github/stars/kodelint/osx-cleaner.svg)](https://github.com/kodelint/osx-cleaner/stargazers)
 [![Last commit](https://img.shields.io/github/last-commit/kodelint/osx-cleaner.svg)](https://github.com/kodelint/osx-cleaner/commits/main)
