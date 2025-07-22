@@ -11,6 +11,10 @@
 [![Last commit](https://img.shields.io/github/last-commit/kodelint/osx-cleaner.svg)](https://github.com/kodelint/osx-cleaner/commits/main)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/kodelint/osx-cleaner/pulls)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kodelint/blog-images/main/common/01-osx-cleaner.png" alt="osx-cleaner" width="500"/>
+</p>
+
 A blazing-fast, terminal-based macOS cleanup and uninstaller utility written in Rust.
 `osx` CLI is designed for developers and power users who want complete control over system hygiene 
 without the bloat of GUI tools. Whether you're cleaning caches to free up space or performing a 
@@ -23,10 +27,6 @@ Built natively for macOS and optimized with parallelism and tabled summaries, it
 - Skip SIP-protected or system-critical paths safely
 
 Unlike traditional tools that hide actions behind buttons, **this CLI shows you everything** every path, every byte, every skipped file, so you stay in control.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/kodelint/blog-images/main/common/01-osx-cleaner.png" alt="osx-cleaner" width="600"/>
-</p>
 
 ---
 
