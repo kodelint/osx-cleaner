@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Run only on version tags like v1.2.3
+
+jobs:
+  build:
+    # We now only build for macOS, so the strategy matrix is simplified.
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [ x86_64 ] # Keep x86_64 for clarity, or remove if macos-latest implies it.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: Build release binary for macOS
+        run: cargo build --release
+
+      - name: Upload artifact (macOS)
+        uses: actions/upload-artifact@v4
+        with:
+          # Name the artifact specifically for macOS to avoid confusion
+          name: osx-macos-${{ matrix.arch }}
+          path: target/release/osx
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest # It's common to run the release step on Ubuntu for better runner availability/cost
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          # Ensure the name matches the artifact name from the 'build' job
+          name: osx-macos-x86_64
+          path: ./artifact/macos-x86_64/osx
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+      - name: Upload macOS binary to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifact/macos-x86_64/osx
+          asset_name: osx-macos-x86_64
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
