@@ -27,3 +27,4 @@ ureq = { version = "2.12.1", features = ["json"] }
 # 'version' specifies the exact version of the serde core library.
 # 'features = ["derive"]' provides macros like `#[derive(Serialize, Deserialize)]`.
 serde = { version = "1.0.219", features = ["derive"] }
+walkdir = "2.5.0"
