@@ -2,7 +2,8 @@ use clap::Parser; // Import the `Parser` trait from the `clap` crate, used for p
 use colored::Colorize;
 // Import the `Colorize` trait, which allows adding ANSI color codes to strings for terminal output.
 use osx::cli::commands::{Cli, Commands}; // Import the `Cli` struct and `Commands` enum from the `commands` module, which define the CLI structure.
-use osx::core::cleaner::clean_my_mac; // Import the `clean_my_mac` function from the `cleaner` module, responsible for system cleanup.
+use osx::core::cleaner_orchestrator::clean_my_mac; // Import the `clean_my_mac` function from the `cleaner` module, responsible for system cleanup.
+// use osx::core::cleaner::clean_my_mac; // Import the `clean_my_mac` function from the `cleaner` module, responsible for system cleanup.
 use osx::core::uninstaller::{CliTool, MacApp, Uninstaller}; // Import `CliTool`, `MacApp` structs, and the `Uninstaller` trait from the `uninstaller` module.
 use osx::core::version;
 use osx::{log_debug, log_error, log_info, log_warn, logger}; // Import custom logging macros and the `logger` initialization function.
@@ -60,9 +61,14 @@ fn main() {
 
         Commands::CleanMyMac { ignore } => { // If the `clean-my-mac` subcommand was invoked, bind its `ignore` argument.
             eprintln!("\n");
-            log_info!("{}","===================================".bold());
-            log_info!("     {}","🧹 Cleaning up your Mac...".bright_blue()); // Inform the user about the cleanup process initiation.
-            log_info!("{}","===================================".bold());
+            eprintln!("{}", "  /\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\".bold().bright_green());
+            eprintln!("{}", " <|                                                                |>".bold().bright_green());
+            eprintln!("{}{}{}", " <|                ".bold().bright_green(), "---=[ o s x - c l e a n e r ]=---".bold().bright_red(),"               |>".bold().bright_green());
+            eprintln!("{}", " <|                                                                |>".bold().bright_green());
+            eprintln!("{}", "  \\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/".bold().bright_green());
+            eprintln!("\n"); // Separation between the banner and the process message
+            eprintln!("{}", "                     🚚 Starting Cleanup Process...                   ".bright_red().bold());
+            eprintln!("{}", "----------------------------------------------------------------------".bold());
             // Call the `clean_my_mac` function from the `cleaner` module.
             // It takes the `dry_run` flag and a clone of the `ignore` vector.
             if let Err(e) = clean_my_mac(dry_run, ignore.clone()) {
