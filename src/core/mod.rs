@@ -1,3 +1,4 @@
 pub mod uninstaller;
-pub mod cleaner;
 pub mod version;
+pub mod cleaners;
+pub mod cleaner_orchestrator;

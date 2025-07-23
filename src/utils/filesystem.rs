@@ -1,4 +1,4 @@
-use crate::log_debug; // Imports the `log_debug` macro for logging debug-level messages.
+use crate::{log_debug, log_info}; // Imports the `log_debug` macro for logging debug-level messages.
 use colored::Colorize; // Imports the `Colorize` trait from the `colored` crate, used for adding color to terminal output strings.
 use std::fs; // Imports the standard library's file system module for operations like deleting files/directories, reading metadata, etc.
 use std::io; // Imports the standard library's I/O module, primarily for `io::Result` and `io::Error`.
@@ -35,9 +35,17 @@ use std::path::Path; // Imports `Path` from the standard library, a universal ty
 /// // Attempt to remove a file named "somefile" in the /tmp directory.
 /// remove_path(Path::new("/tmp/somefile")).expect("Failed to remove path");
 /// ```
-pub fn remove_path(path: &Path) -> io::Result<()> {
-    // Log the attempt to remove the path at debug level, with the path colored blue.
-    log_debug!("Attempting to remove path: {}", path.display().to_string().blue());
+
+// Testing Block
+pub fn remove_path(path: &Path, dry_run: bool) -> io::Result<()> { // Added dry_run parameter
+    // Log the attempt to remove the path at debug level.
+    log_debug!("Attempting to remove path: {}", path.display());
+
+    if dry_run {
+        // ONLY print this log if dry_run is true
+        log_info!("🧠 Pretending to remove: {}", path.display().to_string().yellow());
+        return Ok(()); // In dry run, we simulate and return success
+    }
 
     // Check if the path exists. If it doesn't, there's nothing to do, so return Ok immediately.
     if !path.exists() {
@@ -60,10 +68,9 @@ pub fn remove_path(path: &Path) -> io::Result<()> {
         log_debug!("Path is an unusual filesystem object. Removing as file: {}", path.display());
         fs::remove_file(path)?; // Propagates any `io::Error`.
     }
-
-    // Log successful removal.
+    // Log successful removal for actual deletion
     log_debug!("Successfully removed: {}", path.display());
-    Ok(()) // Return Ok to indicate that the operation completed without an error.
+    Ok(()) // Return Ok to indicate that the actual operation completed without an error.
 }
 
 /// Recursively calculates the total size of a directory or the size of a file.

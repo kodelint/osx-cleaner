@@ -79,7 +79,7 @@ pub trait Uninstaller {
                 // In actual uninstall mode, attempt to delete the path.
                 log_info!("{}: {}", "Deleting".bright_green(), path.display().to_string().bright_white());
                 // Call the `remove_path` utility function.
-                if let Err(e) = remove_path(path) {
+                if let Err(e) = remove_path(path, dry_run) {
                     // If deletion fails, log a warning with the specific path and the error message.
                     log_warn!("{} {}: {}", "Failed to delete".bright_yellow(),
                         path.display().to_string().bright_white(), e.to_string().bright_white());
@@ -90,7 +90,7 @@ pub trait Uninstaller {
             }
         });
 
-        // Log the completion of the uninstall process for the specific app.
+        // Log the completion of the uninstallation process for the specific app.
         log_debug!("Completed uninstall for '{}'", self.name().to_string().bright_white());
         // Return `Ok(())` if the uninstall process completed without critical errors,
         // even if some individual file deletions failed (which are logged as warnings).
