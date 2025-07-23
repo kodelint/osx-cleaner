@@ -15,10 +15,20 @@ macro_rules! log_info {
     ($($arg:tt)*) => (eprintln!("{} {}", "[INFO]".bright_green(), format!($($arg)*)));
 }
 
-// `log_warn!` for non-critical issues or noteworthy conditions.
+// // `log_warn!` for non-critical issues or noteworthy conditions.
+// #[macro_export]
+// macro_rules! log_warn {
+//     ($($arg:tt)*) => (eprintln!("{} {}", "[WARN]".bright_yellow(), format!($($arg)*)));
+// }
+
 #[macro_export]
 macro_rules! log_warn {
-    ($($arg:tt)*) => (eprintln!("{} {}", "[WARN]".bright_yellow(), format!($($arg)*)));
+    ($($arg:tt)*) => ({
+        // Only print if OSX_SHOW_WARNINGS environment variable is set
+        if std::env::var("OSX_SHOW_WARNINGS").is_ok() {
+            eprintln!("{} {}", "[WARN]".bright_yellow(), format!($($arg)*));
+        }
+    });
 }
 
 // `log_error!` for critical errors requiring immediate attention.
@@ -53,8 +63,6 @@ pub fn init(debug: bool) {
 
     if debug {
         log_debug!("Logger initialized in DEBUG mode");
-    } else {
-        log_info!("Logger initialized in INFO mode");
     }
 }
 
