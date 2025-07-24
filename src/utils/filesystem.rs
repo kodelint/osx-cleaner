@@ -58,30 +58,30 @@ pub fn remove_path(path: &Path, dry_run: bool) -> io::Result<()> { // Added dry_
     }
 
     // Check if the path exists. If it doesn't, there's nothing to do, so return Ok immediately.
-    if !path.exists() {
-        log_debug!("Path does not exist: {}", path.display()); // Log that the path was not found.
-        return Ok(()); // Return success as the desired state (path removed) is already met.
-    }
-
-    // The following block is commented out in the provided code, but it represents the
-    // typical logic for actual file/directory removal based on path type.
-    if path.is_file() || path.is_symlink() {
-        // If it's a file or a symbolic link, use `fs::remove_file`.
-        log_debug!("Path is a file or symlink. Removing: {}", path.display());
-        fs::remove_file(path)?; // The `?` operator propagates any `io::Error` that occurs.
-    } else if path.is_dir() {
-        // If it's a directory, use `fs::remove_dir_all` for recursive deletion.
-        log_debug!("Path is a directory. Recursively removing: {}", path.display());
-        fs::remove_dir_all(path)?; // Propagates any `io::Error`.
-    } else {
-        // For other unusual filesystem objects (e.g., block device, char device, fifo, socket),
-        // attempt to remove them as if they were files.
-        log_debug!("Path is an unusual filesystem object. Removing as file: {}", path.display());
-        fs::remove_file(path)?; // Propagates any `io::Error`.
-    }
+    // if !path.exists() {
+    //     log_debug!("Path does not exist: {}", path.display()); // Log that the path was not found.
+    //     return Ok(()); // Return success as the desired state (path removed) is already met.
+    // }
+    //
+    // // The following block is commented out in the provided code, but it represents the
+    // // typical logic for actual file/directory removal based on path type.
+    // if path.is_file() || path.is_symlink() {
+    //     // If it's a file or a symbolic link, use `fs::remove_file`.
+    //     log_debug!("Path is a file or symlink. Removing: {}", path.display());
+    //     fs::remove_file(path)?; // The `?` operator propagates any `io::Error` that occurs.
+    // } else if path.is_dir() {
+    //     // If it's a directory, use `fs::remove_dir_all` for recursive deletion.
+    //     log_debug!("Path is a directory. Recursively removing: {}", path.display());
+    //     fs::remove_dir_all(path)?; // Propagates any `io::Error`.
+    // } else {
+    //     // For other unusual filesystem objects (e.g., block device, char device, fifo, socket),
+    //     // attempt to remove them as if they were files.
+    //     log_debug!("Path is an unusual filesystem object. Removing as file: {}", path.display());
+    //     fs::remove_file(path)?; // Propagates any `io::Error`.
+    // }
     // Log successful removal for actual deletion, conditioned by `OSX_SHOW_DETAILS` environment variable.
     if std::env::var("OSX_SHOW_DETAILS").is_ok() {
-        log_info!("Successfully removed: {}", path.display());
+        log_info!("🗑  Successfully removed: {}", path.display().to_string().white().dimmed());
     }
     Ok(()) // Return Ok to indicate that the actual operation completed without an error.
 }
