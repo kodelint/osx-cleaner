@@ -3,8 +3,8 @@
 // and handles conditional output, especially for debug messages, with colored terminal output.
 
 use colored::*; // Used for adding color to log messages.
-use std::sync::atomic::{AtomicBool, Ordering}; // For thread-safe, atomic control of the debug flag.
-use std::sync::OnceLock; // Ensures the DEBUG_ENABLED flag is initialized exactly once.
+use std::sync::OnceLock;
+use std::sync::atomic::{AtomicBool, Ordering}; // For thread-safe, atomic control of the debug flag. // Ensures the DEBUG_ENABLED flag is initialized exactly once.
 
 /// Provides convenient logging macros.
 /// `#[macro_export]` makes these macros globally available within the crate.
@@ -12,7 +12,7 @@ use std::sync::OnceLock; // Ensures the DEBUG_ENABLED flag is initialized exactl
 // `log_info!` for general application progress and informational messages.
 #[macro_export]
 macro_rules! log_info {
-    ($($arg:tt)*) => (eprintln!("{} {}", "[INFO]".bright_green(), format!($($arg)*)));
+    ($($arg:tt)*) => (eprintln!("{} {}", "[INFO]".green(), format!($($arg)*)));
 }
 
 // // `log_warn!` for non-critical issues or noteworthy conditions.
@@ -26,7 +26,7 @@ macro_rules! log_warn {
     ($($arg:tt)*) => ({
         // Only print if OSX_SHOW_WARNINGS environment variable is set
         if std::env::var("OSX_SHOW_WARNINGS").is_ok() {
-            eprintln!("{} {}", "[WARN]".bright_yellow(), format!($($arg)*));
+            eprintln!("{} {}", "[WARN]".yellow(), format!($($arg)*));
         }
     });
 }
@@ -34,7 +34,7 @@ macro_rules! log_warn {
 // `log_error!` for critical errors requiring immediate attention.
 #[macro_export]
 macro_rules! log_error {
-    ($($arg:tt)*) => (eprintln!("{} {}", "[ERROR]".bright_red(), format!($($arg)*)));
+    ($($arg:tt)*) => (eprintln!("{} {}", "[ERROR]".red(), format!($($arg)*)));
 }
 
 // `log_debug!` for detailed internal application tracing.
