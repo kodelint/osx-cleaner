@@ -16,8 +16,8 @@
 </p>
 
 A blazing-fast, terminal-based macOS cleanup and uninstaller utility written in Rust.
-`osx` CLI is designed for developers and power users who want complete control over system hygiene 
-without the bloat of GUI tools. Whether you're cleaning caches to free up space or performing a 
+`osx` CLI is designed for developers and power users who want complete control over system hygiene
+without the bloat of GUI tools. Whether you're cleaning caches to free up space or performing a
 surgical uninstallation of applications, this tool gives you precision, performance, and full visibility into what’s happening under the hood.
 Built natively for macOS and optimized with parallelism and tabled summaries, it helps you:
 
@@ -67,7 +67,7 @@ Commands:
   clean-my-mac  Clean junk files from system locations
 
 Arguments:
-  [DEBUG]  # 
+  [DEBUG]  #
 
 Options:
       --dry-run  Show what would be deleted without deleting
@@ -94,45 +94,62 @@ You’ll see summary tables like this:
 ```bash
 >> osx --dry-run clean-my-mac
 
-[INFO] Logger initialized in INFO mode
-[INFO] 🧹 Cleaning up your Mac...
-[INFO] 🔍 Checking: /var/folders
-[INFO] 🔍 Checking: /System/Library/Caches
-[INFO] 🔍 Checking: /private/var/folders
-[INFO] 🔍 Checking: /Library/Caches
-[INFO] 🔍 Checking: /Users/kodelint/Library/Caches
-[INFO] 🔍 Checking: /Users/kodelint/Library/Logs
-[INFO] 🔍 Checking: /Users/kodelint/Library/Application Support/CrashReporter
-[INFO] 🔍 Checking: /Users/kodelint/.Trash
-[INFO] 🧾 Would clean: /System/Library/Caches (497.34 MB)
-[INFO] 🧾 Would clean: /Library/Caches (448.65 MB)
-[INFO] 🧾 Would clean: /Users/kodelint/Library/Logs (18.98 MB)
-[INFO] 🧾 Would clean: /var/folders (916.33 MB)
-[INFO] 🧾 Would clean: /Users/kodelint/Library/Caches (590.71 MB)
-[INFO] 🧾 Would clean: /private/var/folders (916.33 MB)
+  /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+<|                                                                 |>
+<|                ---=[ o s x - c l e a n e r ]=---                |>
+<|                                                                 |>
+ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 
-🧾 Cleanup Summary (Successful)
-┌────────────────────────────────┬───────────┐
-│ Path                           │ Size      │
-├────────────────────────────────┼───────────┤
-│ /System/Library/Caches         │ 497.34 MB │
-├────────────────────────────────┼───────────┤
-│ /Library/Caches                │ 448.65 MB │
-├────────────────────────────────┼───────────┤
-│ /Users/kodelint/Library/Logs   │ 18.98 MB  │
-├────────────────────────────────┼───────────┤
-│ /var/folders                   │ 916.33 MB │
-├────────────────────────────────┼───────────┤
-│ /Users/kodelint/Library/Caches │ 590.71 MB │
-├────────────────────────────────┼───────────┤
-│ /private/var/folders           │ 916.33 MB │
-├────────────────────────────────┼───────────┤
-│ Total                          │ 3.31 GB   │
-└────────────────────────────────┴───────────┘
 
-[INFO] 🧠 Estimated space to free: 3.31 GB
-[WARN] ⚠️  System Integrity Protection (SIP) is enabled. Some files may not be removable.
-[INFO] Clean-up completed successfully.
+                   🚚 Starting Cleanup Process...
+----------------------------------------------------------------------
+
+🔍 Verifying Paths...
+
+[INFO] 🔍 Checking: 'Browser Caches' /Users/kodelint/Library/Application Support/Google/Chrome/Default/Service Worker (208.56 KB)
+[INFO] 🔍 Checking: 'Browser Caches' /Users/kodelint/Library/Caches/Google/Chrome/Default (193.75 MB)
+[INFO] 🔍 Checking: 'Crash Reporter Logs' /Users/kodelint/Library/Application Support (0 bytes)
+[INFO] 🔍 Checking: 'Temporary Files' /private/tmp (0 bytes)
+[INFO] 🔍 Checking: 'Temporary Files' /private/var/tmp (132.00 KB)
+[INFO] 🔍 Checking: 'User Caches' /Users/kodelint/Library (1.06 GB)
+[INFO] 🔍 Checking: 'User Logs' /Users/kodelint/Library (7.72 MB)
+
+☑️  Will reclaimed Space...
+
+[INFO] 🧹🪣 Would Clean: 'Browser Caches' /Users/kodelint/Library/Application Support/Google/Chrome/Default/Service Worker (208.56 KB)
+[INFO] 🧹🪣 Would Clean: 'Browser Caches' /Users/kodelint/Library/Caches/Google/Chrome/Default (193.75 MB)
+[INFO] 🧹🪣 Would Clean: 'Crash Reporter Logs' /Users/kodelint/Library/Application Support (0 bytes)
+[INFO] 🧹🪣 Would Clean: 'Temporary Files' /private/tmp (0 bytes)
+[INFO] 🧹🪣 Would Clean: 'Temporary Files' /private/var/tmp (132.00 KB)
+[INFO] 🧹🪣 Would Clean: 'User Caches' /Users/kodelint/Library (1.06 GB)
+[INFO] 🧹🪣 Would Clean: 'User Logs' /Users/kodelint/Library (7.72 MB)
+
+📥📄🗑️  Estimated Cleanup Summary (Dry Run)
+
+┌─────────────────────┬──────────────────────────────────────────────────────────────────────────────────┬───────────┐
+│ Type                │ Path                                                                             │ Size      │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ Browser Caches      │ /Users/kodelint/Library/Application Support/Google/Chrome/Default/Service Worker │ 208.56 KB │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ Browser Caches      │ /Users/kodelint/Library/Caches/Google/Chrome/Default                             │ 193.75 MB │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ Crash Reporter Logs │ /Users/kodelint/Library/Application Support                                      │ 0 bytes   │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ Temporary Files     │ /private/tmp                                                                     │ 0 bytes   │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ Temporary Files     │ /private/var/tmp                                                                 │ 132.00 KB │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ User Caches         │ /Users/kodelint/Library                                                          │ 1.06 GB   │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│ User Logs           │ /Users/kodelint/Library                                                          │ 7.72 MB   │
+├─────────────────────┼──────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│                     │ Total                                                                            │ 1.25 GB   │
+└─────────────────────┴──────────────────────────────────────────────────────────────────────────────────┴───────────┘
+
+
+[INFO] 🧠 Estimated space to free: 1.25 GB
+[INFO] ⚠️  System Integrity Protection (SIP) is enabled. Some files may not be removable.
+[INFO] Estimated (Dry Run) clean-up completed.
 ```
 
 ## 📂 Cleanup Targets
@@ -171,7 +188,7 @@ osx uninstall slack
 Supports both GUI apps (.app) and CLI tools installed via Homebrew or symlinked to `/usr/local/bin`, `/opt/homebrew/bin`, etc.
 
 ## 🛡️ System Integrity Protection (SIP)
-If SIP is enabled, certain system paths like `/System/Library/Caches` cannot be modified. The tool detects and 
+If SIP is enabled, certain system paths like `/System/Library/Caches` cannot be modified. The tool detects and
 gracefully skips these locations, logging warnings as needed.
 
 ## 👨‍💻 Developer Notes
