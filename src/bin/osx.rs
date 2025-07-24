@@ -76,7 +76,12 @@ fn main() {
                 log_error!("{}: {}", "Clean-up failed".bright_yellow(), e.to_string().bright_red());
             } else {
                 // If the cleanup process completes successfully, log a success message.
-                log_info!("{}", "Clean-up completed successfully.".bright_white());
+                if dry_run {
+                    log_info!("{}", "Estimated (Dry Run) clean-up completed.".bright_white());
+                } else {
+                    log_info!("{}", "Clean-up completed successfully.".bright_white());
+                }
+
             }
         }
         Commands::Version => {
