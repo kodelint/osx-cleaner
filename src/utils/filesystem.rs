@@ -47,7 +47,8 @@ use std::path::Path;
 /// // Simulate removing a directory named "temp_dir" in /var (dry run).
 /// remove_path(Path::new("/var/temp_dir"), true).expect("Failed to simulate removal");
 /// ```
-pub fn remove_path(path: &Path, dry_run: bool) -> io::Result<()> { // Added dry_run parameter
+pub fn remove_path(path: &Path, dry_run: bool) -> io::Result<()> {
+    // Added dry_run parameter
     // Log the attempt to remove the path at debug level.
     log_debug!("Attempting to remove path: {}", path.display());
 
@@ -58,30 +59,39 @@ pub fn remove_path(path: &Path, dry_run: bool) -> io::Result<()> { // Added dry_
     }
 
     // Check if the path exists. If it doesn't, there's nothing to do, so return Ok immediately.
-    // if !path.exists() {
-    //     log_debug!("Path does not exist: {}", path.display()); // Log that the path was not found.
-    //     return Ok(()); // Return success as the desired state (path removed) is already met.
-    // }
-    //
-    // // The following block is commented out in the provided code, but it represents the
-    // // typical logic for actual file/directory removal based on path type.
-    // if path.is_file() || path.is_symlink() {
-    //     // If it's a file or a symbolic link, use `fs::remove_file`.
-    //     log_debug!("Path is a file or symlink. Removing: {}", path.display());
-    //     fs::remove_file(path)?; // The `?` operator propagates any `io::Error` that occurs.
-    // } else if path.is_dir() {
-    //     // If it's a directory, use `fs::remove_dir_all` for recursive deletion.
-    //     log_debug!("Path is a directory. Recursively removing: {}", path.display());
-    //     fs::remove_dir_all(path)?; // Propagates any `io::Error`.
-    // } else {
-    //     // For other unusual filesystem objects (e.g., block device, char device, fifo, socket),
-    //     // attempt to remove them as if they were files.
-    //     log_debug!("Path is an unusual filesystem object. Removing as file: {}", path.display());
-    //     fs::remove_file(path)?; // Propagates any `io::Error`.
-    // }
+    if !path.exists() {
+        log_debug!("Path does not exist: {}", path.display()); // Log that the path was not found.
+        return Ok(()); // Return success as the desired state (path removed) is already met.
+    }
+
+    // The following block is commented out in the provided code, but it represents the
+    // typical logic for actual file/directory removal based on path type.
+    if path.is_file() || path.is_symlink() {
+        // If it's a file or a symbolic link, use `fs::remove_file`.
+        log_debug!("Path is a file or symlink. Removing: {}", path.display());
+        fs::remove_file(path)?; // The `?` operator propagates any `io::Error` that occurs.
+    } else if path.is_dir() {
+        // If it's a directory, use `fs::remove_dir_all` for recursive deletion.
+        log_debug!(
+            "Path is a directory. Recursively removing: {}",
+            path.display()
+        );
+        fs::remove_dir_all(path)?; // Propagates any `io::Error`.
+    } else {
+        // For other unusual filesystem objects (e.g., block device, char device, fifo, socket),
+        // attempt to remove them as if they were files.
+        log_debug!(
+            "Path is an unusual filesystem object. Removing as file: {}",
+            path.display()
+        );
+        fs::remove_file(path)?; // Propagates any `io::Error`.
+    }
     // Log successful removal for actual deletion, conditioned by `OSX_SHOW_DETAILS` environment variable.
     if std::env::var("OSX_SHOW_DETAILS").is_ok() {
-        log_info!("🗑  Successfully removed: {}", path.display().to_string().white().dimmed());
+        log_info!(
+            "🗑  Successfully removed: {}",
+            path.display().to_string().white().dimmed()
+        );
     }
     Ok(()) // Return Ok to indicate that the actual operation completed without an error.
 }
@@ -108,7 +118,8 @@ pub fn calculate_dir_size(path: &Path) -> io::Result<u64> {
     let mut size = 0; // Initialize total size accumulator.
     // If the path is a directory, iterate through its contents.
     if path.is_dir() {
-        for entry in fs::read_dir(path)? { // Read directory entries, propagating errors with `?`.
+        for entry in fs::read_dir(path)? {
+            // Read directory entries, propagating errors with `?`.
             let entry = entry?; // Get the `DirEntry` from `io::Result` (again, `?` for errors).
             let entry_path = entry.path(); // Get the `PathBuf` for the current entry.
             // Get metadata of the symbolic link itself, not the target, to avoid infinite loops with symlinks.
